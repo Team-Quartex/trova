@@ -1,0 +1,13 @@
+const postId = data.insertId;
+            if(req.body.images===0) return res.status(200).json("Post has been created2");
+            for(const image of req.body.images){
+                const qimage = "INSERT INTO post_image (`postId`, `imageLink`) VALUES (?)";
+                const imageValuse = [
+                    postId,
+                    image
+                ]
+                db.query(qimage,[imageValuse],(err,dataimage)=>{
+                    if (err) return res.status(500).json(err);
+                    return res.status(200).json("Post has been created1");
+                })
+            }
