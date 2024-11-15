@@ -53,12 +53,8 @@ const storage = multer.diskStorage({
     }
     const fileInfos = req.files.map(file => ({
       filename: file.filename,
-      path: `/uploads/${file.filename}`,
     }));
-    
-    console.log(fileInfos)
     res.json({
-      message: 'Files uploaded successfully',
       files: fileInfos,
     });
   });

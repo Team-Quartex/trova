@@ -37,7 +37,7 @@ export const getPosts = (req, res) => {
 };
 
 
-export const addPost = (req, res) => {
+export const addPost1 = (req, res) => {
 
     const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not Logged in!");
@@ -68,5 +68,35 @@ export const addPost = (req, res) => {
             return res.status(200).json("Post has been created1");
         });
     });
+
+};
+
+export const addPost = (req, res) => {
+
+    
+
+    const q = "INSERT INTO posts (`description`,`location`,`userId`) VALUES (?)";
+    const values = [
+        req.body.desc,
+        req.body.location,
+        2
+    ]
+        db.query(q,[values] ,(err, data) => {
+            const postId = data.insertId;
+            if (err) return res.status(500).json(err);
+            if(req.body.images.length===0) return res.status(200).json("Post has been created12");
+            for(const image of req.body.images){
+                const qimage = "INSERT INTO post_image (`postId`, `imageLink`) VALUES (?)";
+                const imageValuse = [
+                    postId,
+                    image
+                ]
+                db.query(qimage,[imageValuse],(err,dataimage)=>{
+                    if (err) return res.status(500).json(err);
+                })
+            }
+            return res.status(200).json("Post has been created1");
+        });
+    
 
 };
