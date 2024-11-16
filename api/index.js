@@ -6,6 +6,7 @@ import likes from "./routes/likes.js"
 import savedpost from './routes/savedposts.js'
 import seller from './routes/sellers.js'
 import products from './routes/products.js'
+import reviews from './routes/reviews.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import multer from 'multer'
@@ -35,6 +36,7 @@ app.use("/api/likes",likes);
 app.use("/api/savedpost",savedpost);
 app.use("/api/seller",seller);
 app.use("/api/products",products)
+app.use("/api/reviews",reviews)
 
 
 

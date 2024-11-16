@@ -1,11 +1,9 @@
-products
+Table: product_reviews
 Columns:
-productId int(11) AI PK 
-sellerId int(11) PK 
-name varchar(100) 
-description varchar(500) 
-location varchar(45) 
-price int(11) 
-status varchar(45) 
-postAt timestamp 
-categoryId int(11)
+reviewId int(11) PK 
+productId int(11) 
+userid int(11) 
+reviewRate double 
+review_content varchar(250) 
+availibility varchar(45) 
+reviewtime timestamp
