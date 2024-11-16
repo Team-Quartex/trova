@@ -1,6 +1,9 @@
 import express from "express"
 import userRoute from "./routes/users.js"
 import posts from "./routes/posts.js"
+import comment from "./routes/comments.js"
+import likes from "./routes/likes.js"
+import savedpost from './routes/savedposts.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import multer from 'multer'
@@ -24,7 +27,10 @@ app.listen('8000',()=>{
 });
 
 app.use("/api/users",userRoute);
-app.use("/api/products",posts);
+app.use("/api/posts",posts);
+app.use("/api/comments",comment);
+app.use("/api/likes",likes);
+app.use("/api/savedpost",savedpost);
 
 
 
