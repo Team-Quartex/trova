@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2024 at 02:11 AM
+-- Generation Time: Nov 16, 2024 at 02:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -208,9 +208,41 @@ CREATE TABLE `products` (
   `description` varchar(500) NOT NULL,
   `location` varchar(45) NOT NULL,
   `price` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
   `status` varchar(45) NOT NULL,
-  `postAt` timestamp NOT NULL DEFAULT current_timestamp()
+  `postAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `categoryId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`productId`, `sellerId`, `name`, `description`, `location`, `price`, `qty`, `status`, `postAt`, `categoryId`) VALUES
+(1, 1, 'tent1', 'tent2', 'tent', 1500, 4, '', '2024-11-16 05:42:36', 1),
+(2, 1, 'tent1', 'tent2', 'tent', 1500, 3, '', '2024-11-16 05:43:39', 1),
+(3, 1, 'tent1', 'tent2', 'tent', 1500, 5, '', '2024-11-16 05:53:09', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_category`
+--
+
+CREATE TABLE `product_category` (
+  `categoryId` int(11) NOT NULL,
+  `categoryName` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`categoryId`, `categoryName`) VALUES
+(1, 'tent'),
+(2, 'camera'),
+(3, 'sleeping bag'),
+(4, 'guide');
 
 -- --------------------------------------------------------
 
@@ -222,6 +254,13 @@ CREATE TABLE `product_images` (
   `productId` int(11) NOT NULL,
   `imageLink` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`productId`, `imageLink`) VALUES
+(3, 'hansa');
 
 -- --------------------------------------------------------
 
@@ -238,6 +277,43 @@ CREATE TABLE `product_reviews` (
   `availibility` varchar(45) NOT NULL,
   `reviewtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`reviewId`, `productId`, `userid`, `reviewRate`, `review_content`, `availibility`, `reviewtime`) VALUES
+(1, 1, 3, 4, 'mljljl', '', '2024-11-16 06:54:39'),
+(2, 1, 3, 2, 'mljljl', '', '2024-11-16 06:55:58'),
+(3, 1, 3, 4, 'mljljl', '', '2024-11-16 06:55:58'),
+(4, 1, 3, 5, 'mljljl', '', '2024-11-16 06:55:58'),
+(5, 1, 3, 1, 'mljljl', '', '2024-11-16 06:55:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservation`
+--
+
+CREATE TABLE `reservation` (
+  `reservationId` int(11) NOT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `orderTime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`reservationId`, `productId`, `userId`, `qty`, `startDate`, `endDate`, `orderTime`) VALUES
+(1, 1, 3, 1, '2024-11-17', '2024-11-20', '2024-11-16 09:35:00'),
+(2, 1, 2, 2, '2024-11-19', '2024-11-26', '2024-11-16 09:54:40'),
+(5, 1, 1, 1, '2024-10-12', '2024-10-26', '2024-11-16 11:00:59'),
+(6, 1, 1, 1, '2024-11-15', '2024-11-22', '2024-11-16 11:01:23');
 
 -- --------------------------------------------------------
 
@@ -274,6 +350,13 @@ CREATE TABLE `sellers` (
   `password` varchar(200) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sellers`
+--
+
+INSERT INTO `sellers` (`sid`, `name`, `business_name`, `email`, `address`, `city`, `username`, `password`, `status`) VALUES
+(1, 'shana', 'businaya', 'email@shana.com', '21/2', 'colombi', 'hansakaya', '$2a$10$IxsKYYil92YrbeJvSQZkM.CAjveeuI/W4gEeHw0VncYJ30q/bIXpK', '');
 
 -- --------------------------------------------------------
 
@@ -339,7 +422,15 @@ ALTER TABLE `post_likes`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`productId`,`sellerId`),
   ADD UNIQUE KEY `productId_UNIQUE` (`productId`),
-  ADD KEY `sellerproduct_idx` (`sellerId`);
+  ADD KEY `sellerproduct_idx` (`sellerId`),
+  ADD KEY `productCategory_idx` (`categoryId`);
+
+--
+-- Indexes for table `product_category`
+--
+ALTER TABLE `product_category`
+  ADD PRIMARY KEY (`categoryId`),
+  ADD UNIQUE KEY `categoryId_UNIQUE` (`categoryId`);
 
 --
 -- Indexes for table `product_images`
@@ -354,6 +445,15 @@ ALTER TABLE `product_reviews`
   ADD PRIMARY KEY (`reviewId`),
   ADD KEY `reviewProduct_idx` (`productId`),
   ADD KEY `reviewUser_idx` (`userid`);
+
+--
+-- Indexes for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`reservationId`),
+  ADD UNIQUE KEY `orderId_UNIQUE` (`reservationId`),
+  ADD KEY `reservationproduct_idx` (`productId`),
+  ADD KEY `reservationUser_idx` (`userId`);
 
 --
 -- Indexes for table `saved_posts`
@@ -396,13 +496,31 @@ ALTER TABLE `post_comments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `product_category`
+--
+ALTER TABLE `product_category`
+  MODIFY `categoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sellers`
 --
 ALTER TABLE `sellers`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -444,6 +562,7 @@ ALTER TABLE `post_likes`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
+  ADD CONSTRAINT `productCategory` FOREIGN KEY (`categoryId`) REFERENCES `product_category` (`categoryId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sellerproduct` FOREIGN KEY (`sellerId`) REFERENCES `sellers` (`sid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -458,6 +577,13 @@ ALTER TABLE `product_images`
 ALTER TABLE `product_reviews`
   ADD CONSTRAINT `reviewProduct` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reviewUser` FOREIGN KEY (`userid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservationUser` FOREIGN KEY (`userId`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservationproduct` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `saved_posts`
