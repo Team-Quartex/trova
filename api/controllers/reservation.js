@@ -1,21 +1,14 @@
-import {db} from '../conect.js'
-import jwt from 'jsonwebtoken'
+import { db } from "../conect.js";
+import jwt from "jsonwebtoken";
 
+export const checkReservation = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not Logged in!");
 
-function checkavailibility(){
-    
-}
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
 
-
-export const checkReservation = (req,res)=>{
-
-    const token = req.cookies.accessToken;
-    if (!token) return res.status(401).json("Not Logged in!");
-  
-    jwt.verify(token, "secretkey", (err, userInfo) => {
-      if (err) return res.status(403).json("Token is not valid");
-  
-      const q = `
+    const q = `
                                 SELECT 
                     i.productId, 
                     i.name, 
@@ -33,11 +26,40 @@ export const checkReservation = (req,res)=>{
                     i.productId = ?
                 GROUP BY 
                     i.productId;`;
-        
-          db.query(q,[req.body.end,req.body.start,req.body.itemId], (err, data) => {
-          if (err) return res.status(500).json(err);
-          return res.status(200).json(data);
-          });
-      });
-  };
 
+    db.query(
+      q,
+      [req.body.end, req.body.start, req.body.itemId],
+      (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json(data);
+      }
+    );
+  });
+};
+
+export const addreservation = (req,res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not Logged in!");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const q = "INSERT INTO reservation(`productId`, `userId`, `qty`, `startDate`, `endDate`) VALUES (?,?,?,?,?);";
+
+    db.query(
+      q,
+      [
+        req.body.productId,
+        userInfo.id,
+        req.body.quantity,
+        req.body.start,
+        req.body.end
+      ],
+      (err, result) => {
+        if (err) return res.status(500).json(err);
+        return res.status(201).json("Reservation added successfully!");
+      }
+    );
+  });
+};

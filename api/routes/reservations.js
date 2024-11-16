@@ -1,10 +1,10 @@
 import express from 'express'
-import { checkReservation } from '../controllers/reservation.js'
+import { checkReservation,addreservation } from '../controllers/reservation.js'
 
 const router = express.Router()
 
 router.get("/check",checkReservation)
-router.get("/addreservation",)
+router.post("/addreservation",addreservation)
 
 
 export default router
