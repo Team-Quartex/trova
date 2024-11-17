@@ -1,21 +1,9 @@
-
-@import url(https://db.onlinewebfonts.com/c/94ac1dcd1fd4d1429cd877cd9d99e480?family=Tanseek+Modern+Pro+Arabic);
-
-@font-face {
-    font-family: "Tanseek Modern Pro Arabic";
-    src: url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.eot");
-    src: url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/94ac1dcd1fd4d1429cd877cd9d99e480.svg#Tanseek Modern Pro Arabic")format("svg");
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Gudea:ital,wght@0,400;0,700;1,400&family=Khula:wght@300;400;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Tanseek Modern Pro Arabic";
+    font-family: "Ubuntu", serif;
 }
 input[type="file"] {
   display: none;
@@ -50,15 +38,15 @@ body {
 }
 
 .user-name {
-    font-size: 48px;
+    font-size: 25px;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
 .user-handle {
-    font-size: 24px;
+    font-size: 18px;
     color: #238688;
-    margin-top: -15px;
+    
     margin-bottom: 15px;
 }
 
@@ -66,11 +54,11 @@ body {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .nav-item {
-    font-size: 26px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -96,7 +84,7 @@ body {
    
 }
 .post-scroller{
-    max-height: 85vh;
+    max-height: 90vh;
     overflow-y:auto;
 }
 
@@ -119,7 +107,7 @@ body {
 }
 
 .header h1 {
-    font-size: 64px;
+    font-size: 30px;
     font-weight: bold;
     margin-top: -2vh;
 }
@@ -153,10 +141,14 @@ body {
 }
 
 .post-input-container {
+    background-color: white;
+    padding: 4px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 15px;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .post-avatar {
@@ -169,24 +161,30 @@ body {
 .post-input {
     flex-grow: 1;
     border: none;
-    background-color: #f0f2f5;
+    outline: none;
     padding: 10px;
     border-radius: 20px;
+    font-size: 16px;
+}
+.post-input::placeholder{
+    font-size: 16px;
 }
 
 .post-actions {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .post-action {
+    font-size: 16px;
     background: none;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    font-size: 14px;
+    
     color: #65676b;
 }
 
@@ -208,6 +206,7 @@ body {
     padding: 8px 16px;
     border-radius: 20px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .feed {
@@ -219,9 +218,7 @@ body {
     
 }
 
-.post {
-    margin-bottom: 5vh;
-}
+
 
 .post-header {
     display: flex;
@@ -237,20 +234,20 @@ body {
 
 .post-user-info .post-username {
     font-weight: bold;
-    font-size:  24px;
+    font-size:  20px;
 }
 
 .post-time {
     color: #65676b;
-    font-size: 15px;
-    margin-top: -1vh;
+    font-size: 16px;
+    
 }
 
 .post-content {
     margin-bottom: 10px;
 }
 .post-content p{
-    font-size: 25px;
+    font-size: 16px;
 }
 .post-images {
     display: flex;
@@ -328,7 +325,7 @@ body {
 }
 
 .suggestions h3, .special-content h3 {
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 15px;
 }
 
